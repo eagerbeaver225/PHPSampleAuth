@@ -86,8 +86,8 @@
             );
 		};
 
-		var baseUrl = '<%= OpenApiBaseUrl %>';
-        var token = '<%= TokenType %> <%= TokenValue %>';
+		var baseUrl = '<?php echo $openApiBaseUrl ?>';
+        var token = '<?php echo $tokenType ?> <?php echo $tokenValue ?>';
 
 		$('#getData').on('click', function () {
 			getClientsMe(baseUrl, token, $('#data'));

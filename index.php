@@ -4,7 +4,7 @@ include ('appCache.php');
 include ('openApiAuthHelper.php');
 
 global $token;
-global $Script, $samlRequest, $authenticationUrl, $openApiResponseData;
+global $Script, $samlRequest, $authenticationUrl, $openApiResponseData, $openApiBaseUrl;
 
 $samlResponse = "";
 $url = "";
@@ -13,6 +13,7 @@ $appSecret = "";
 $samlToken = "";
 $token = array();
 $openApiResponseData = "";
+$openApiBaseUrl = "";
 
 if(array_key_exists('SAMLResponse', $_POST)){
     $samlResponse = $_POST["SAMLResponse"];    
@@ -25,6 +26,7 @@ if(strlen($samlResponse) != 0){
     $url =  AppCache::$AuthenticationUrl;
     $appKey = AppCache::$AppKey;
     $appSecret = AppCache::$AppSecret;
+    $openApiBaseUrl = AppCache::$OpenApiBaseUrl;
     $samlToken = utf8_decode(base64_decode($samlResponse));
     session_start();
     $token = OpenApiAuthHelper::getAccessToken($url, $appKey, $appSecret, $samlToken);
@@ -63,6 +65,7 @@ function setupAuthenticationForm()
     $samlRequest = "";
     $authenticationUrl = "";
     $openApiResponseData = "";
+    $openApiBaseUrl = "";
     $tokenValue = "";
     $tokenType = "";
 
