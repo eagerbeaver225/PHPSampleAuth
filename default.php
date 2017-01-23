@@ -51,7 +51,7 @@
 				AccessToken is:<br />
 			</div>
 			<div class="panel-body">
-				<pre><? echo $tokenValue ?></pre>
+				<pre><?php echo $tokenValue ?></pre>
 			</div>
 		</div>
 	<a href="refreshToken.php" class="btn btn-primary">Refresh Token</a>

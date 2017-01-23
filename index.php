@@ -18,6 +18,8 @@ if(array_key_exists('SAMLResponse', $_POST)){
     $samlResponse = $_POST["SAMLResponse"];    
 }
 
+global $tokenValue, $tokenType;
+
 if(strlen($samlResponse) != 0){
     AppCache::init();
     $url =  AppCache::$AuthenticationUrl;
@@ -61,6 +63,8 @@ function setupAuthenticationForm()
     $samlRequest = "";
     $authenticationUrl = "";
     $openApiResponseData = "";
+    $tokenValue = "";
+    $tokenType = "";
 
     AppCache::init();
     $authenticationUrl = AppCache::$AuthenticationUrl."/AuthnRequest";
