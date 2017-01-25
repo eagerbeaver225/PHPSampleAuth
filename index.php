@@ -3,6 +3,8 @@
 include ('appCache.php'); 
 include ('openApiAuthHelper.php');
 
+session_start();
+
 global $token;
 global $Script, $samlRequest, $authenticationUrl, $openApiResponseData, $openApiBaseUrl;
 
@@ -20,24 +22,29 @@ if(array_key_exists('SAMLResponse', $_POST)){
 }
 
 global $tokenValue, $tokenType;
+AppCache::init();
 
 if(strlen($samlResponse) != 0){
-    AppCache::init();
     $url =  AppCache::$AuthenticationUrl;
     $appKey = AppCache::$AppKey;
     $appSecret = AppCache::$AppSecret;
     $openApiBaseUrl = AppCache::$OpenApiBaseUrl;
     $samlToken = utf8_decode(base64_decode($samlResponse));
-    session_start();
+
     $token = OpenApiAuthHelper::getAccessToken($url, $appKey, $appSecret, $samlToken);
     $_SESSION['token'] = $token;
 
-    AppCache::$AccessToken = $token; 
-
 }else{
-    $token = AppCache::$AccessToken;
-    $token = array_filter($token);
-    if(empty($token)){
+    if(!empty($_SESSION)){
+        $token = $_SESSION['token'];   
+        $token = array_filter($token);
+    }
+
+    $from = "";
+    if(isset($_GET['from'])){
+        $from = $_GET['from'];
+    }
+    if($from != 'refresh' || empty($token)){
         setupAuthenticationForm();
         return;
     }
@@ -56,7 +63,6 @@ try{
     showWebException();
     $tokenValue = $token["access_token"];
     $tokenType = $token["token_type"];
-    AppCache::$accessToken = "";
 }
 
 function setupAuthenticationForm()
@@ -87,6 +93,5 @@ function setupAuthenticationForm()
 function showWebException(Exception $e)
 {
     $openApiResponseData = "Error: " + $e->getMessage();
-
 }
 ?>

@@ -1,8 +1,7 @@
 <?php
 include ('configManager.php');
 
-class AppCache{    
-    public static $AccessToken = array();
+class AppCache{
     public static $AppKey;
     public static $AppSecret;
     public static $AuthenticationUrl;

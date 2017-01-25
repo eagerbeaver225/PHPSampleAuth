@@ -2,9 +2,10 @@
 include('appCache.php');
 include('openApiAuthHelper.php');
 
+session_start();
+
 $token = array();
 AppCache::init();
-session_start();
 $token = $_SESSION['token'];
 
 if(empty($token) || !isset($token)){    
@@ -17,7 +18,6 @@ global $status, $tokenVaule;
 $refreshedToken = OpenApiAuthHelper::refreshToken(AppCache::$AuthenticationUrl, 
     AppCache::$AppKey, AppCache::$AppSecret, $token["refresh_token"]);
 if(strlen($refreshedToken["refresh_token"])){
-    AppCache::$AccessToken = $refreshedToken["refresh_token"];
     $tokenValue = $refreshedToken["refresh_token"];
     $status = "Token refreshed";
     $_SESSION['token'] = $refreshedToken;

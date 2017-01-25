@@ -16,7 +16,7 @@
             <pre><?php echo $tokenValue ?></pre>
           </div>
         </div>
-    <a href="index.php" class="btn btn-primary">Back</a> <a href="refreshToken.php" class="btn btn-primary">Retry token refresh</a>
+    <a href="index.php?from=refresh" class="btn btn-primary">Back</a> <a href="refreshToken.php" class="btn btn-primary">Retry token refresh</a>
     </div>
 </body>
 </html>
